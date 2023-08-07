@@ -8,6 +8,8 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +21,10 @@ class BottomFragment : Fragment() {
     private lateinit var seasonalImageView: ImageView
     private lateinit var dateTimeTextView: TextView
     private lateinit var topSpinner: ConstraintLayout
+    private lateinit var imageViewSpinner: ImageView
     lateinit var colorAnimation:ObjectAnimator
+
+    private var isSpinning = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +39,27 @@ class BottomFragment : Fragment() {
         dateTimeTextView = view.findViewById(R.id.dateTimeTextView)
         seasonalImageView = view.findViewById(R.id.seasonalImageView)
         topSpinner = view.findViewById(R.id.topSpinner)
+        imageViewSpinner = view.findViewById(R.id.wheelSpinner)
 
-
+        startSpinnerAnimation()
         updateDateTime()
+    }
+
+    private fun startSpinnerAnimation() {
+        isSpinning = true
+        val rotateAnimation = RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        )
+        rotateAnimation.duration = 1000
+        rotateAnimation.repeatCount = Animation.INFINITE
+        imageViewSpinner.startAnimation(rotateAnimation)
+    }
+
+    private fun stopSpinnerAnimation() {
+        isSpinning = false
+        imageViewSpinner.clearAnimation()
     }
 
 
