@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="175dp"
             android:layout_marginStart="1dp"
@@ -63,6 +63,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="left"
                 android:layout_weight="1"
+                android:layout_marginLeft="20dp"
                 app:srcCompat="@drawable/cloud_1" />
             <ImageView
                 android:id="@+id/sun"
@@ -70,8 +71,8 @@
                 android:layout_height="100dp"
                 android:layout_gravity="left"
                 android:layout_weight="1"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginStart="50dp"
                 app:srcCompat="@drawable/sun3f" />
 
             <ImageView
@@ -82,7 +83,7 @@
                 android:layout_marginTop="70dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/birds_2" />
-        </LinearLayout>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Bottom Segment -->

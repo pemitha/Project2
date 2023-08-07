@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomFragment: BottomFragment
     private lateinit var topSegment: ConstraintLayout
     private lateinit var birdsAnimated: ImageView
+    private lateinit var cloudsAnimated: ImageView
+    private lateinit var sunAnimated: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +31,34 @@ class MainActivity : AppCompatActivity() {
         bottomFragment = BottomFragment()
         topSegment = findViewById(R.id.topSegment)
         birdsAnimated = findViewById(R.id.birds)
+        sunAnimated = findViewById(R.id.sun)
+        cloudsAnimated = findViewById(R.id.clouds)
 
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.bottomSegment, bottomFragment)
         transaction.commit()
 
         startAnimation()
+
+        sunAnimated.animation?.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+            }
+            override fun onAnimationRepeat(animation: Animation?) {
+            }
+            override fun onAnimationEnd(animation: Animation?) {
+                moveImageToRight()
+            }
+        })
+        cloudsAnimated.animation?.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+            }
+            override fun onAnimationRepeat(animation: Animation?) {
+            }
+            override fun onAnimationEnd(animation: Animation?) {
+                moveImageToRight()
+            }
+        })
+
 
         val startButton = findViewById<Button>(R.id.startButton)
         startButton.setOnClickListener {
@@ -111,10 +135,49 @@ class MainActivity : AppCompatActivity() {
             Animation.RELATIVE_TO_SELF, 0f
         )
 
-        animation.duration = 3000 // Animation duration in milliseconds
+        animation.duration = 3000
         animation.repeatMode = Animation.RESTART
         animation.repeatCount = Animation.INFINITE
 
         birdsAnimated.startAnimation(animation)
+
+        val animation2 = TranslateAnimation(
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, resources.displayMetrics.widthPixels.toFloat(),
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, 0f
+        )
+        animation2.duration = 3000
+        sunAnimated.startAnimation(animation2)
+        cloudsAnimated.startAnimation(animation2)
+
     }
+
+    private fun moveImageToLeft() {
+        val animation = TranslateAnimation(
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, resources.displayMetrics.widthPixels.toFloat(),
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, 0f
+        )
+        animation.duration = 3000
+        sunAnimated.startAnimation(animation)
+        cloudsAnimated.startAnimation(animation)
+
+    }
+
+    private fun moveImageToRight() {
+        val animation = TranslateAnimation(
+            Animation.ABSOLUTE, resources.displayMetrics.widthPixels.toFloat(),
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, 0f,
+            Animation.ABSOLUTE, 0f
+        )
+        animation.duration = 3000
+        sunAnimated.startAnimation(animation)
+        cloudsAnimated.startAnimation(animation)
+
+        moveImageToLeft()
+    }
+
 }
