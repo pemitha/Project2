@@ -1,6 +1,5 @@
 package com.example.project_2
 
-//import kotlinx.android.synthetic.main.fragment_bottom.*
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -43,6 +42,7 @@ class BottomFragment : Fragment() {
 
         startSpinnerAnimation()
         updateDateTime()
+        setSeasonImage(getCurrentSeason())
     }
 
     private fun startSpinnerAnimation() {
@@ -57,11 +57,10 @@ class BottomFragment : Fragment() {
         imageViewSpinner.startAnimation(rotateAnimation)
     }
 
-     fun stopSpinnerAnimation() {
+    fun stopSpinnerAnimation() {
         isSpinning = false
         imageViewSpinner.clearAnimation()
     }
-
 
     fun setSeasonImage(imageResId: Int) {
         // Fade in animation
@@ -69,23 +68,18 @@ class BottomFragment : Fragment() {
             ObjectAnimator.ofFloat<View>(seasonalImageView, View.ALPHA, 0f, 1f)
         fadeInAnimation.duration = 1000 // in milliseconds
 
-
         // Fade out animation
         val fadeOutAnimation: ObjectAnimator =
             ObjectAnimator.ofFloat<View>(seasonalImageView, View.ALPHA, 1f, 0f)
         fadeOutAnimation.duration = 1000
 
-
         fadeOutAnimation.start()
         fadeInAnimation.start()
         seasonalImageView.setImageResource(imageResId)
-
-
     }
 
-
     fun animateBackgroundColor(fromColor: Int, toColor: Int) {
-            colorAnimation = ObjectAnimator.ofObject(
+        colorAnimation = ObjectAnimator.ofObject(
             topSpinner,
             "backgroundColor",
             ArgbEvaluator(),
@@ -110,5 +104,16 @@ class BottomFragment : Fragment() {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         return dateFormat.format(currentDate)
+    }
+
+    private fun getCurrentSeason(): Int {
+        val month = Calendar.getInstance().get(Calendar.MONTH)
+        return when (month) {
+            in 0..1, 11 -> R.drawable.winter
+            in 2..4 -> R.drawable.spring
+            in 5..7 -> R.drawable.summer
+            in 8..10 -> R.drawable.autumn
+            else -> R.drawable.spring // fallback image
+        }
     }
 }
