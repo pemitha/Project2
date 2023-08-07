@@ -57,7 +57,7 @@ class BottomFragment : Fragment() {
         imageViewSpinner.startAnimation(rotateAnimation)
     }
 
-    private fun stopSpinnerAnimation() {
+     fun stopSpinnerAnimation() {
         isSpinning = false
         imageViewSpinner.clearAnimation()
     }
